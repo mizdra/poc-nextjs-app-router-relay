@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:next": "next dev",
-    "dev:mock-server": "node --import tsx/esm --env-file=.env --watch --watch-preserve-output scripts/start-mock-server.ts",
+    "dev:mock-server": "node --import tsx/esm --import @mizdra/node-next-image-loader --env-file=.env --watch --watch-preserve-output scripts/start-mock-server.ts",
     "build": "next build",
     "start": "next start",
     "gen": "relay-compiler",
@@ -20,6 +20,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.6.3",
+    "@mizdra/node-next-image-loader": "^0.0.1",
     "@mswjs/http-middleware": "^0.9.2",
     "@types/express": "^4.17.21",
     "@types/node": "^20",
