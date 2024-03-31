@@ -1,0 +1,36 @@
+interface Node {
+  id: ID!
+}
+
+type Article implements Node {
+  id: ID!
+  title: String!
+  content: String!
+}
+
+type ArticleEdge {
+  cursor: String!
+  node: Article!
+}
+
+type ArticleConnection {
+  edges: [ArticleEdge]
+  pageInfo: PageInfo!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+type Query {
+  articles(
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): ArticleConnection
+  node(id: ID!): Node
+}

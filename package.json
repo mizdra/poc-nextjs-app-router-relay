@@ -7,18 +7,22 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "gen": "relay-compiler",
     "lint": "biome check ."
   },
   "dependencies": {
     "next": "14.1.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-relay": "^16.2.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.6.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "graphql": "^16.8.1",
+    "relay-compiler": "^16.2.0",
     "typescript": "^5"
   }
 }
