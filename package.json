@@ -1,5 +1,5 @@
 {
-  "name": "template-nextjs-relay-msw",
+  "name": "nextjs-relay-msw-template",
   "version": "0.1.0",
   "private": true,
   "scripts": {
