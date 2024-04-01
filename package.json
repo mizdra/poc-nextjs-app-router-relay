@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.6.3",
-    "@mizdra/node-next-image-loader": "^0.0.1",
+    "@mizdra/node-next-image-loader": "^0.1.0",
     "@mswjs/http-middleware": "^0.9.2",
     "@types/express": "^4.17.21",
     "@types/node": "^20",
