@@ -18,6 +18,24 @@ type ArticleConnection {
   pageInfo: PageInfo!
 }
 
+type Scrap implements Node {
+  id: ID!
+  title: String!
+  content: String!
+}
+
+type ScrapEdge {
+  cursor: String!
+  node: Scrap!
+}
+
+type ScrapConnection {
+  edges: [ScrapEdge]
+  pageInfo: PageInfo!
+}
+
+union SearchResult = Article | Scrap
+
 type PageInfo {
   hasNextPage: Boolean!
   hasPreviousPage: Boolean!
@@ -32,5 +50,7 @@ type Query {
     last: Int
     before: String
   ): ArticleConnection
+  scraps(first: Int, after: String, last: Int, before: String): ScrapConnection
+  search(query: String!): [SearchResult!]!
   node(id: ID!): Node
 }
