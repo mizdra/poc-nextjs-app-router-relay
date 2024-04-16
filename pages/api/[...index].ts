@@ -7,13 +7,16 @@
 // So, start a new Node.js process and launch a mock server that listens on a different port than Next.js.
 // Then, requests are sent from the Next.js process to this mock server.
 
-import { createServer } from '@mswjs/http-middleware';
+import { createMiddleware } from '@mswjs/http-middleware';
 import { handlers } from '../../lib/mocks/handlers';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import express from 'express';
 
-const httpServer = createServer(...handlers);
+const app = express();
+app.use(express.json());
+app.use(createMiddleware(...handlers));
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
   console.log('req.url:', req.url);
-  httpServer(req, res);
+  app(req, res);
 }
