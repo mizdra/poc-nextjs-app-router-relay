@@ -13,7 +13,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import express from 'express';
 
 const app = express();
-app.use(express.json());
 app.use(createMiddleware(...handlers));
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {

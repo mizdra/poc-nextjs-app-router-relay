@@ -8,6 +8,7 @@ export const handlers = [
   http.get('/api/image', () => {
     return HttpResponse.json(I_JS);
   }),
+  // for test: `curl -i -X POST -H "Content-Type: Application/json" -d '{ "query": "query GetHello { hello }" }' http://localhost:3000/api/graphql`
   graphql.query('GetHello', () => {
     return HttpResponse.json({
       data: {
