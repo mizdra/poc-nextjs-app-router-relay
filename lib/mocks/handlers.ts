@@ -1,4 +1,4 @@
-import { http, HttpResponse } from 'msw';
+import { graphql, http, HttpResponse } from 'msw';
 import I_JS from '../../assets/js.png';
 
 export const handlers = [
@@ -7,5 +7,12 @@ export const handlers = [
   }),
   http.get('/api/image', () => {
     return HttpResponse.json(I_JS);
+  }),
+  graphql.query('GetHello', () => {
+    return HttpResponse.json({
+      data: {
+        hello: 'Hello, world!',
+      },
+    });
   }),
 ];
