@@ -1,5 +1,5 @@
 {
-  "name": "nextjs-relay-msw-template",
+  "name": "poc-nextjs-app-router-relay",
   "version": "0.1.0",
   "private": true,
   "type": "module",
