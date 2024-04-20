@@ -1,13 +1,14 @@
 import '@/app/global.css';
 
 import { Header } from '@/app/Header';
-import { RelayEnvironmentProvider } from '@/app/RelayEnvironmentProvider';
 import { SideBar } from '@/app/SideBar';
 import type { layout_RootLayoutQuery } from '@/app/__generated__/layout_RootLayoutQuery.graphql';
+import { RelayEnvironmentProvider } from '@/components/RelayEnvironmentProvider';
 import { fetchGraphQLQuery } from '@/lib/relay/fetchQuery';
 import type { Metadata } from 'next';
 import { graphql } from 'relay-runtime';
 
+import { RelayRecordMapProvider } from '@/components/RelayRecordMapProvider';
 import styles from './layout.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -29,22 +30,24 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const query = await fetchGraphQLQuery<layout_RootLayoutQuery>(rootLayoutQuery, {});
+  const { data, recordMap } = await fetchGraphQLQuery<layout_RootLayoutQuery>(rootLayoutQuery, {});
   return (
     <html lang="en">
       <head>{/* TODO: Add favicon */}</head>
       <RelayEnvironmentProvider>
-        <body>
-          <div>
-            <Header />
-            <div className={styles.columnWrapper}>
-              <div className={styles.mainColumn}>{children}</div>
-              <div className={styles.rightColumn}>
-                <SideBar query={query} />
+        <RelayRecordMapProvider recordMap={recordMap}>
+          <body>
+            <div>
+              <Header />
+              <div className={styles.columnWrapper}>
+                <div className={styles.mainColumn}>{children}</div>
+                <div className={styles.rightColumn}>
+                  <SideBar query={data} />
+                </div>
               </div>
             </div>
-          </div>
-        </body>
+          </body>
+        </RelayRecordMapProvider>
       </RelayEnvironmentProvider>
     </html>
   );

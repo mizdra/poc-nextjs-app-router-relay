@@ -5,7 +5,9 @@ import { notFound } from 'next/navigation';
 import { graphql } from 'relay-runtime';
 
 export default async function ArticlePage({ params }: { params: { articleId: string } }) {
-  const { node: article } = await fetchGraphQLQuery<page_ArticlePageQuery>(
+  const {
+    data: { node: article },
+  } = await fetchGraphQLQuery<page_ArticlePageQuery>(
     graphql`
     query page_ArticlePageQuery($articleId: ID!) @raw_response_type {
       node(id: $articleId) {
