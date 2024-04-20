@@ -11,7 +11,7 @@ export const ArticleFactory = defineArticleFactory({
   defaultFields: {
     __typename: 'Article',
     id: dynamic(({ seq }) => `Article-${seq}`),
-    title: 'Article Title',
+    title: dynamic(async ({ get }) => `Title of ${await get('id')}`),
     content: 'This is the content of Article.',
     comments: dynamic(async () => ({
       edges: [
@@ -32,7 +32,7 @@ export const ArticleCommentFactory = defineArticleCommentFactory({
     __typename: 'ArticleComment',
     id: dynamic(({ seq }) => `ArticleComment-${seq}`),
     author: dynamic(() => UserFactory.build()),
-    content: 'This is a comment.',
+    content: dynamic(async ({ get }) => `This is the comment of ${await get('id')}.`),
   },
 });
 
