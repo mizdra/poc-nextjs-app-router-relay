@@ -6,29 +6,40 @@
   "scripts": {
     "dev": "run-p dev:*",
     "dev:next": "next dev",
+    "dev:relay": "npm run gen:relay -- --watch",
+    "dev:graphql-codegen": "npm run gen:graphql-codegen -- --watch",
+    "dev:hcm": "npm run gen:hcm -- --watch",
     "build": "next build",
     "start": "next start",
-    "gen": "relay-compiler",
+    "gen": "run-s -c gen:*",
+    "gen:relay": "./node_modules/relay-compiler/cli.js",
+    "gen:graphql-codegen": "graphql-codegen-esm",
+    "gen:hcm": "hcm '{app,components}/**/*.module.css'",
     "lint": "biome check ."
   },
   "dependencies": {
     "next": "14.1.4",
     "react": "^18",
     "react-dom": "^18",
-    "react-relay": "^16.2.0"
+    "react-relay": "^16.2.0",
+    "relay-runtime": "^16.2.0"
   },
   "devDependencies": {
     "@biomejs/biome": "1.6.3",
-    "@mswjs/http-middleware": "^0.9.2",
-    "@types/express": "^4.17.21",
+    "@graphql-codegen/cli": "^5.0.2",
+    "@graphql-codegen/typescript": "^4.0.6",
+    "@mizdra/graphql-codegen-typescript-fabbrica": "^0.5.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
-    "express": "^4.19.2",
+    "@types/react-relay": "^16.0.6",
+    "@types/relay-runtime": "^14.1.23",
     "graphql": "^16.8.1",
+    "happy-css-modules": "^2.1.2",
     "msw": "^2.2.13",
     "npm-run-all2": "^6.1.2",
     "relay-compiler": "^16.2.0",
+    "strict-event-emitter": "^0.5.1",
     "tsx": "^4.7.1",
     "typescript": "^5"
   }

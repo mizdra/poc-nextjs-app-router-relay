@@ -1,14 +1,12 @@
-import Image from 'next/image';
+import { Card } from '@/components/Card';
 
-export default async function Home() {
-  const helloData = await fetch(`${process.env.API_ENDPOINT}/api/hello`);
-  const imageData = await fetch(`${process.env.API_ENDPOINT}/api/image`);
+export default async function RootPage() {
   return (
     <main>
-      <div>{await helloData.text()}</div>
-      <div>
-        <Image src={await imageData.json()} alt="JavaScript Logo" />
-      </div>
+      <Card>
+        <p>Welcome to mini-blog!</p>
+        <p>This blog is a PoC for combining Next.js App Router and Relay.</p>
+      </Card>
     </main>
   );
 }

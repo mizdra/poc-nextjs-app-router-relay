@@ -1,19 +1,39 @@
-import { graphql, http, HttpResponse } from 'msw';
-import I_JS from '../../assets/js.png';
+import { delay, graphql, HttpResponse } from 'msw';
+import type { layout_RootLayoutQuery$rawResponse } from '@/app/__generated__/layout_RootLayoutQuery.graphql';
+import { ArticleFactory, ViewerFactory } from '@/lib/mocks/factory';
+import type { HeaderQuery$rawResponse } from '@/app/__generated__/HeaderQuery.graphql';
+import {
+  page_ArticlePageQuery,
+  type page_ArticlePageQuery$variables,
+  type page_ArticlePageQuery$rawResponse,
+} from '@/app/article/[articleId]/__generated__/page_ArticlePageQuery.graphql';
 
 export const handlers = [
-  http.get('/api/hello', () => {
-    return HttpResponse.text(`Hello, world! (${new Date().toISOString()})`);
-  }),
-  http.get('/api/image', () => {
-    return HttpResponse.json(I_JS);
-  }),
-  // for test: `curl -i -X POST -H "Content-Type: Application/json" -d '{ "query": "query GetHello { hello }" }' http://localhost:3000/api/graphql`
-  graphql.query('GetHello', () => {
+  graphql.query<layout_RootLayoutQuery$rawResponse>('layout_RootLayoutQuery', async () => {
     return HttpResponse.json({
       data: {
-        hello: 'Hello, world!',
+        latestArticles: {
+          nodes: await ArticleFactory.buildList(5),
+        },
       },
     });
   }),
+  graphql.query<HeaderQuery$rawResponse>('HeaderQuery', async () => {
+    await delay(1000);
+    return HttpResponse.json({
+      data: {
+        viewer: await ViewerFactory.build(),
+      },
+    });
+  }),
+  graphql.query<page_ArticlePageQuery$rawResponse, page_ArticlePageQuery$variables>(
+    'page_ArticlePageQuery',
+    async ({ variables }) => {
+      return HttpResponse.json({
+        data: {
+          node: await ArticleFactory.build({ id: variables.articleId }),
+        },
+      });
+    },
+  ),
 ];
