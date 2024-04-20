@@ -11,6 +11,7 @@ This is a PoC for combining Next.js App Router and Relay.
 
 ```console
 $ npm i
+$ npm run gen
 $ npm run dev
 ```
 
