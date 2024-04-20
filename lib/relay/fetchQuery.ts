@@ -1,4 +1,4 @@
-import { getCurrentEnvironment } from '@/lib/relay/environment';
+import { createEnvironment } from '@/lib/relay/environment';
 import type { CacheConfig, FetchQueryFetchPolicy, GraphQLTaggedNode, OperationType } from 'relay-runtime';
 import { fetchQuery } from 'relay-runtime';
 import type { RecordMap } from 'relay-runtime/lib/store/RelayStoreTypes';
@@ -11,7 +11,7 @@ export async function fetchGraphQLQuery<T extends OperationType>(
     fetchPolicy?: FetchQueryFetchPolicy | null | undefined;
   } | null,
 ): Promise<{ data: T['response']; recordMap: RecordMap }> {
-  const environment = getCurrentEnvironment();
+  const environment = createEnvironment();
   const observable = fetchQuery<T>(environment, taggedNode, variables, cacheConfig);
   const data = await observable.toPromise();
   if (data === undefined) throw new Error('data is undefined');
