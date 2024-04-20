@@ -27,7 +27,8 @@
 // Relay's PreloadedQuery.
 
 import { useMemo } from 'react';
-import type { PreloadedQuery, PreloadFetchPolicy } from 'react-relay';
+// biome-ignore lint/nursery/noRestrictedImports: <explanation>
+import type { PreloadFetchPolicy, PreloadedQuery } from 'react-relay';
 import type { ConcreteRequest, IEnvironment, OperationType } from 'relay-runtime';
 import { responseCache } from './environment';
 import type { SerializablePreloadedQuery } from './loadSerializableQuery';

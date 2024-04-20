@@ -1,11 +1,11 @@
 'use client';
 
-import { graphql } from 'relay-runtime';
+import type { HeaderQuery } from '@/app/__generated__/HeaderQuery.graphql';
 import { GraphQLImage } from '@/components/GraphQLImage';
+import { Suspense } from 'react';
 // biome-ignore lint/nursery/noRestrictedImports: This is CC.
 import { useLazyLoadQuery } from 'react-relay';
-import type { HeaderQuery } from '@/app/__generated__/HeaderQuery.graphql';
-import { Suspense } from 'react';
+import { graphql } from 'relay-runtime';
 
 import styles from './Header.module.css';
 

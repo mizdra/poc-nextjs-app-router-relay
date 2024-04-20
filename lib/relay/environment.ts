@@ -24,15 +24,15 @@
  */
 
 import {
-  Environment,
-  Network,
-  RecordSource,
-  Store,
-  type RequestParameters,
-  QueryResponseCache,
-  type Variables,
-  type GraphQLResponse,
   type CacheConfig,
+  Environment,
+  type GraphQLResponse,
+  Network,
+  QueryResponseCache,
+  RecordSource,
+  type RequestParameters,
+  Store,
+  type Variables,
 } from 'relay-runtime';
 
 if (process.env.NEXT_PUBLIC_API_ENDPOINT === undefined) throw new Error('NEXT_PUBLIC_API_ENDPOINT is not defined');

@@ -2,8 +2,8 @@
 // ref: https://github.com/mswjs/msw/issues/1644#issuecomment-2060546647
 
 import { type LifeCycleEventsMap, handleRequest } from 'msw';
-import { handlers } from '../../../lib/mocks/handlers';
 import { Emitter } from 'strict-event-emitter';
+import { handlers } from '../../../lib/mocks/handlers';
 
 const emitter = new Emitter<LifeCycleEventsMap>();
 
