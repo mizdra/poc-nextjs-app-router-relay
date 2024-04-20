@@ -39,7 +39,6 @@ export async function networkFetch(request: RequestParameters, variables: Variab
   // property of the response. If any exceptions occurred when processing the request,
   // throw an error to indicate to the developer what went wrong.
   if ('errors' in json && Array.isArray(json.errors)) {
-    console.error(json.errors);
     throw new Error(
       `Error fetching GraphQL query '${request.name}' with variables '${JSON.stringify(variables)}': ${JSON.stringify(
         json.errors,
