@@ -14,6 +14,9 @@ export const handlers = [
         latestArticles: {
           nodes: await ArticleFactory.buildList(5),
         },
+        popularArticles: {
+          nodes: await ArticleFactory.buildList(5),
+        },
       },
     });
   }),

@@ -1,13 +1,5 @@
-.columnWrapper {
+.container {
   display: flex;
-  padding: 20px;
+  flex-direction: column;
   gap: 10px;
-}
-
-.mainColumn {
-  flex: 1;
-}
-
-.rightColumn {
-  max-width: 300px;
 }

@@ -8,7 +8,7 @@ import { fetchGraphQLQuery } from '@/lib/relay/fetchQuery';
 import type { Metadata } from 'next';
 import { graphql } from 'relay-runtime';
 
-import styles from './SideBar.module.css';
+import styles from './layout.module.css';
 
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'default-no-store';
