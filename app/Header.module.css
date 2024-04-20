@@ -12,6 +12,8 @@
 .title {
   font-size: 30px;
   font-weight: bold;
+  text-decoration: none;
+  color: inherit;
 }
 
 .userInfo {

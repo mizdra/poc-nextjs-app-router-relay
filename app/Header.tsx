@@ -7,12 +7,17 @@ import { useLazyLoadQuery } from 'react-relay';
 import { graphql } from 'relay-runtime';
 
 import { User } from '@/components/User';
+import Link from 'next/link';
 import styles from './Header.module.css';
 
 export function Header() {
   return (
     <header className={styles.header}>
-      <div className={styles.title}>mini-blog</div>
+      <div>
+        <Link className={styles.title} href="/">
+          mini-blog
+        </Link>
+      </div>
       <div>
         <Suspense fallback={'Loading...'}>
           <LoginButtonOrUser />
