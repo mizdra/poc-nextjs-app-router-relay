@@ -19,6 +19,9 @@
             }
           }
         }
+      },
+      "correctness": {
+        "noUnusedImports": "error"
       }
     }
   },
