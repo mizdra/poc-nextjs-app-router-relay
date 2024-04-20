@@ -15,14 +15,14 @@ export function Header() {
       <div className={styles.title}>mini-blog</div>
       <div>
         <Suspense fallback={'Loading...'}>
-          <LoginButtonOrUserAvatar />
+          <LoginButtonOrUser />
         </Suspense>
       </div>
     </header>
   );
 }
 
-function LoginButtonOrUserAvatar() {
+function LoginButtonOrUser() {
   // Fetch user-specific data on the client side to keep the entire page cacheable on the CDN.
   const { viewer } = useLazyLoadQuery<HeaderQuery>(
     graphql`
