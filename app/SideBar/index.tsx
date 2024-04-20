@@ -1,14 +1,15 @@
-import type { SideBar_query$key } from '@/app/__generated__/SideBar_query.graphql';
 import { Card } from '@/components/Card';
 import Link from 'next/link';
 import { graphql, readInlineData } from 'relay-runtime';
 
-import styles from './SideBar.module.css';
+import { PopularArticleCard } from '@/app/SideBar/PopularArticleCard';
+import type { SideBar_query$key } from '@/app/SideBar/__generated__/SideBar_query.graphql';
+import styles from './index.module.css';
 
-export function SideBar({ query }: { query: SideBar_query$key }) {
+export function SideBar({ query: _query }: { query: SideBar_query$key }) {
   const {
     latestArticles: { nodes: latestArticles },
-    popularArticles: { nodes: popularArticles },
+    ...query
   } = readInlineData(
     graphql`
     fragment SideBar_query on Query @inline {
@@ -18,16 +19,12 @@ export function SideBar({ query }: { query: SideBar_query$key }) {
           title
         }
       }
-      popularArticles(first: 5) {
-        nodes {
-          id
-          title
-        }
-      }
+      ...PopularArticleCard_query
     }
   `,
-    query,
+    _query,
   );
+  console.log({ query });
   return (
     <div className={styles.container}>
       <Card>
@@ -40,16 +37,7 @@ export function SideBar({ query }: { query: SideBar_query$key }) {
           ))}
         </ul>
       </Card>
-      <Card>
-        <h2>Popular Articles</h2>
-        <ul>
-          {popularArticles.map((article) => (
-            <li key={article.id}>
-              <Link href={`/article/${article.id}`}>{article.title}</Link>
-            </li>
-          ))}
-        </ul>
-      </Card>
+      <PopularArticleCard query={query} />
     </div>
   );
 }

@@ -1,3 +1,7 @@
+import type {
+  PopularArticleCardPaginationQuery$rawResponse,
+  PopularArticleCardPaginationQuery$variables,
+} from '@/app/SideBar/__generated__/PopularArticleCardPaginationQuery.graphql';
 import type { HeaderQuery$rawResponse } from '@/app/__generated__/HeaderQuery.graphql';
 import type { layout_RootLayoutQuery$rawResponse } from '@/app/__generated__/layout_RootLayoutQuery.graphql';
 import type {
@@ -15,7 +19,17 @@ export const handlers = [
           nodes: await ArticleFactory.buildList(5),
         },
         popularArticles: {
-          nodes: await ArticleFactory.buildList(5),
+          edges: [
+            { cursor: '1', node: await ArticleFactory.build() },
+            { cursor: '2', node: await ArticleFactory.build() },
+            { cursor: '3', node: await ArticleFactory.build() },
+            { cursor: '4', node: await ArticleFactory.build() },
+            { cursor: '5', node: await ArticleFactory.build() },
+          ],
+          pageInfo: {
+            endCursor: '5',
+            hasNextPage: true,
+          },
         },
       },
     });
@@ -34,6 +48,29 @@ export const handlers = [
       return HttpResponse.json({
         data: {
           node: await ArticleFactory.build({ id: variables.articleId }),
+        },
+      });
+    },
+  ),
+  graphql.query<PopularArticleCardPaginationQuery$rawResponse, PopularArticleCardPaginationQuery$variables>(
+    'PopularArticleCardPaginationQuery',
+    async ({ variables }) => {
+      console.log('PopularArticleCardPaginationQuery');
+      return HttpResponse.json({
+        data: {
+          popularArticles: {
+            edges: [
+              { cursor: '1', node: await ArticleFactory.build() },
+              { cursor: '2', node: await ArticleFactory.build() },
+              { cursor: '3', node: await ArticleFactory.build() },
+              { cursor: '4', node: await ArticleFactory.build() },
+              { cursor: '5', node: await ArticleFactory.build() },
+            ],
+            pageInfo: {
+              endCursor: '5',
+              hasNextPage: true,
+            },
+          },
         },
       });
     },
