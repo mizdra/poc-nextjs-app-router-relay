@@ -2,8 +2,8 @@
 
 import type { CommentsCard_article$key } from '@/app/article/[articleId]/__generated__/CommentsCard_article.graphql';
 import type { CommentsCard_articleComment$key } from '@/app/article/[articleId]/__generated__/CommentsCard_articleComment.graphql';
-import { Avatar } from '@/components/Avatar';
 import { Card } from '@/components/Card';
+import { User } from '@/components/User';
 // biome-ignore lint/nursery/noRestrictedImports: This is CC.
 import { graphql, useFragment, usePaginationFragment } from 'react-relay';
 
@@ -54,7 +54,7 @@ function Comment({ articleComment }: { articleComment: CommentsCard_articleComme
     graphql`
       fragment CommentsCard_articleComment on ArticleComment {
         author {
-          ...Avatar_user
+          ...User_user
         }
         content
       }
@@ -64,7 +64,7 @@ function Comment({ articleComment }: { articleComment: CommentsCard_articleComme
   return (
     <div>
       <div>
-        <Avatar user={author} alt="" />
+        <User user={author} />
       </div>
       <div>{content}</div>
     </div>

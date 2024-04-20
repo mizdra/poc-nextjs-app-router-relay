@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 import { useLazyLoadQuery } from 'react-relay';
 import { graphql } from 'relay-runtime';
 
-import { Avatar } from '@/components/Avatar';
+import { User } from '@/components/User';
 import styles from './Header.module.css';
 
 export function Header() {
@@ -29,8 +29,7 @@ function LoginButtonOrUserAvatar() {
       query HeaderQuery @raw_response_type {
         viewer {
         user {
-          name
-          ...Avatar_user
+          ...User_user
         }
       }
       }
@@ -40,7 +39,7 @@ function LoginButtonOrUserAvatar() {
   if (viewer) {
     return (
       <div className={styles.userInfo}>
-        <Avatar user={viewer.user} alt={viewer.user.name} />
+        <User user={viewer.user} />
       </div>
     );
   }
