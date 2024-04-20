@@ -1,7 +1,7 @@
 import type {
-  PopularArticleCardPaginationQuery$rawResponse,
-  PopularArticleCardPaginationQuery$variables,
-} from '@/app/SideBar/__generated__/PopularArticleCardPaginationQuery.graphql';
+  LatestArticleCardPaginationQuery$rawResponse,
+  LatestArticleCardPaginationQuery$variables,
+} from '@/app/SideBar/__generated__/LatestArticleCardPaginationQuery.graphql';
 import type { HeaderQuery$rawResponse } from '@/app/__generated__/HeaderQuery.graphql';
 import type { layout_RootLayoutQuery$rawResponse } from '@/app/__generated__/layout_RootLayoutQuery.graphql';
 import type {
@@ -20,9 +20,6 @@ export const handlers = [
     return HttpResponse.json({
       data: {
         latestArticles: {
-          nodes: await ArticleFactory.buildList(5),
-        },
-        popularArticles: {
           edges: [
             { cursor: '1', node: await ArticleFactory.build() },
             { cursor: '2', node: await ArticleFactory.build() },
@@ -32,6 +29,9 @@ export const handlers = [
             endCursor: '3',
             hasNextPage: true,
           },
+        },
+        popularArticles: {
+          nodes: await ArticleFactory.buildList(3),
         },
       },
     });
@@ -58,13 +58,13 @@ export const handlers = [
       });
     },
   ),
-  graphql.query<PopularArticleCardPaginationQuery$rawResponse, PopularArticleCardPaginationQuery$variables>(
-    'PopularArticleCardPaginationQuery',
+  graphql.query<LatestArticleCardPaginationQuery$rawResponse, LatestArticleCardPaginationQuery$variables>(
+    'LatestArticleCardPaginationQuery',
     async () => {
       await delay(500);
       return HttpResponse.json({
         data: {
-          popularArticles: {
+          latestArticles: {
             edges: [
               { cursor: '1', node: await ArticleFactory.build() },
               { cursor: '2', node: await ArticleFactory.build() },
