@@ -23,6 +23,7 @@ export function Header() {
 }
 
 function LoginButtonOrUserAvatar() {
+  // Fetch user-specific data on the client side to keep the entire page cacheable on the CDN.
   const { viewer } = useLazyLoadQuery<HeaderQuery>(
     graphql`
       query HeaderQuery @raw_response_type {

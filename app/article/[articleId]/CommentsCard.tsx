@@ -7,6 +7,7 @@ import { Card } from '@/components/Card';
 // biome-ignore lint/nursery/noRestrictedImports: This is CC.
 import { graphql, useFragment, usePaginationFragment } from 'react-relay';
 
+// This is the Client Component because it implements pagination with `usePaginationFragment`.
 export function CommentsCard({ article }: { article: CommentsCard_article$key }) {
   const { data, hasNext, loadNext, isLoadingNext } = usePaginationFragment(
     graphql`

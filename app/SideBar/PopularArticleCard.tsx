@@ -6,6 +6,7 @@ import Link from 'next/link';
 // biome-ignore lint/nursery/noRestrictedImports: This is CC.
 import { graphql, usePaginationFragment } from 'react-relay';
 
+// This is the Client Component because it implements pagination with `usePaginationFragment`.
 export function PopularArticleCard({ query }: { query: PopularArticleCard_query$key }) {
   const { data, hasNext, loadNext, isLoadingNext } = usePaginationFragment(
     graphql`

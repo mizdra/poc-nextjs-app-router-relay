@@ -8,7 +8,7 @@ import { fetchGraphQLQuery } from '@/lib/relay/fetchQuery';
 import type { Metadata } from 'next';
 import { graphql } from 'relay-runtime';
 
-import { RelayRecordMapProvider } from '@/components/RelayRecordMapProvider';
+import { RelayRecordMapPublisher } from '@/components/RelayRecordMapPublisher';
 import styles from './layout.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -35,7 +35,7 @@ export default async function RootLayout({
     <html lang="en">
       <head>{/* TODO: Add favicon */}</head>
       <RelayEnvironmentProvider>
-        <RelayRecordMapProvider recordMap={recordMap}>
+        <RelayRecordMapPublisher recordMap={recordMap}>
           <body>
             <div>
               <Header />
@@ -47,7 +47,7 @@ export default async function RootLayout({
               </div>
             </div>
           </body>
-        </RelayRecordMapProvider>
+        </RelayRecordMapPublisher>
       </RelayEnvironmentProvider>
     </html>
   );

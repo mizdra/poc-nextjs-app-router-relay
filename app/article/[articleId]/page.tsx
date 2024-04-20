@@ -1,7 +1,7 @@
 import { CommentsCard } from '@/app/article/[articleId]/CommentsCard';
 import type { page_ArticlePageQuery } from '@/app/article/[articleId]/__generated__/page_ArticlePageQuery.graphql';
 import { Card } from '@/components/Card';
-import { RelayRecordMapProvider } from '@/components/RelayRecordMapProvider';
+import { RelayRecordMapPublisher } from '@/components/RelayRecordMapPublisher';
 import { fetchGraphQLQuery } from '@/lib/relay/fetchQuery';
 import { notFound } from 'next/navigation';
 import { graphql } from 'relay-runtime';
@@ -30,7 +30,7 @@ export default async function ArticlePage({ params }: { params: { articleId: str
   );
   if (article?.__typename !== 'Article') return notFound();
   return (
-    <RelayRecordMapProvider recordMap={recordMap}>
+    <RelayRecordMapPublisher recordMap={recordMap}>
       <main className={styles.main}>
         <Card>
           <h2>{article.title}</h2>
@@ -38,6 +38,6 @@ export default async function ArticlePage({ params }: { params: { articleId: str
         </Card>
         <CommentsCard article={article} />
       </main>
-    </RelayRecordMapProvider>
+    </RelayRecordMapPublisher>
   );
 }
