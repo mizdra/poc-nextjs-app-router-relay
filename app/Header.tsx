@@ -1,12 +1,12 @@
 'use client';
 
 import type { HeaderQuery } from '@/app/__generated__/HeaderQuery.graphql';
-import { GraphQLImage } from '@/components/GraphQLImage';
 import { Suspense } from 'react';
 // biome-ignore lint/nursery/noRestrictedImports: This is CC.
 import { useLazyLoadQuery } from 'react-relay';
 import { graphql } from 'relay-runtime';
 
+import { Avatar } from '@/components/Avatar';
 import styles from './Header.module.css';
 
 export function Header() {
@@ -43,8 +43,7 @@ function LoginButtonOrUserAvatar() {
   if (viewer) {
     return (
       <div className={styles.userInfo}>
-        <GraphQLImage className={styles.avatar} src={viewer.user.avatar} alt={viewer.user.name} />
-        <span>{viewer.user.name}</span>
+        <Avatar user={viewer.user} alt={viewer.user.name} />
       </div>
     );
   }

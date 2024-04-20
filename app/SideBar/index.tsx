@@ -24,7 +24,6 @@ export function SideBar({ query: _query }: { query: SideBar_query$key }) {
   `,
     _query,
   );
-  console.log({ query });
   return (
     <div className={styles.container}>
       <Card>

@@ -10,7 +10,7 @@ export function PopularArticleCard({ query }: { query: PopularArticleCard_query$
   const { data, hasNext, loadNext, isLoadingNext } = usePaginationFragment(
     graphql`
       fragment PopularArticleCard_query on Query
-      @argumentDefinitions(first: { type: "Int", defaultValue: 5 }, after: { type: "String" })
+      @argumentDefinitions(first: { type: "Int", defaultValue: 3 }, after: { type: "String" })
       @refetchable(queryName: "PopularArticleCardPaginationQuery" directives: ["@raw_response_type"]) {
         popularArticles(first: $first, after: $after) @connection(key: "PopularArticleCard_popularArticles") {
           edges {
@@ -24,7 +24,6 @@ export function PopularArticleCard({ query }: { query: PopularArticleCard_query$
     `,
     query,
   );
-  console.log('PopularArticleCard', { data });
   const popularArticles = data.popularArticles.edges.map((edge) => edge.node);
   return (
     <Card>
@@ -38,7 +37,7 @@ export function PopularArticleCard({ query }: { query: PopularArticleCard_query$
       </ul>
       {hasNext && (
         <div>
-          <button type="button" onClick={() => loadNext(5)} disabled={isLoadingNext}>
+          <button type="button" onClick={() => loadNext(3)} disabled={isLoadingNext}>
             Load more
           </button>
         </div>

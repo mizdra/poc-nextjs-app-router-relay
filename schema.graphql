@@ -6,6 +6,12 @@ type Article implements Node {
   id: ID!
   title: String!
   content: String!
+  comments(
+    first: Int
+    after: String
+    last: Int
+    before: String
+  ): ArticleCommentConnection!
 }
 
 type ArticleEdge {
@@ -16,6 +22,23 @@ type ArticleEdge {
 type ArticleConnection {
   nodes: [Article!]!
   edges: [ArticleEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ArticleComment implements Node {
+  id: ID!
+  author: User!
+  content: String!
+}
+
+type ArticleCommentEdge {
+  cursor: String!
+  node: ArticleComment!
+}
+
+type ArticleCommentConnection {
+  nodes: [ArticleComment!]!
+  edges: [ArticleCommentEdge!]!
   pageInfo: PageInfo!
 }
 
