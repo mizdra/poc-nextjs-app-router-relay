@@ -1,11 +1,17 @@
+import type { GraphQLImage_image$key } from '@/components/__generated__/GraphQLImage_image.graphql';
 import Image, { type ImageProps } from 'next/image';
+import { graphql, readInlineData } from 'relay-runtime';
 
-type GraphQLImageType = {
-  url: string;
-  width: number;
-  height: number;
-};
-
-export function GraphQLImage({ src, ...restProps }: Omit<ImageProps, 'src'> & { src: GraphQLImageType }) {
-  return <Image src={{ src: src.url, width: src.width, height: src.height }} {...restProps} />;
+export function GraphQLImage({ src, ...restProps }: Omit<ImageProps, 'src'> & { src: GraphQLImage_image$key }) {
+  const { url, width, height } = readInlineData(
+    graphql`
+    fragment GraphQLImage_image on Image @inline {
+      url
+      width
+      height
+    }
+  `,
+    src,
+  );
+  return <Image src={{ src: url, width: width, height: height }} {...restProps} />;
 }

@@ -53,12 +53,7 @@ function Comment({ articleComment }: { articleComment: CommentsCard_articleComme
     graphql`
       fragment CommentsCard_articleComment on ArticleComment {
         author {
-          name
-          avatar {
-            url
-            width
-            height
-          }
+          ...Avatar_user
         }
         content
       }

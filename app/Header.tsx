@@ -29,11 +29,7 @@ function LoginButtonOrUserAvatar() {
         viewer {
         user {
           name
-          avatar {
-            url
-            width
-            height
-          }
+          ...Avatar_user
         }
       }
       }
