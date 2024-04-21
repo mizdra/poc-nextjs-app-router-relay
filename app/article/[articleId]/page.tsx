@@ -8,6 +8,9 @@ import { graphql } from 'relay-runtime';
 
 import styles from './page.module.css';
 
+export const dynamic = 'force-dynamic';
+export const fetchCache = 'default-no-store';
+
 export default async function ArticlePage({ params }: { params: { articleId: string } }) {
   const {
     data: { node: article },
