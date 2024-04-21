@@ -63,12 +63,12 @@ This allows the Server Component to fetch queries and read data.
 
 In order for the Client Component to also read the query data fetched by the Server Component, it must be cached in a location accessible by the client.
 
-The official example uses `QueryResponseCache` to cache the query data. However, the code is a bit more complex.
+The official example uses [`QueryResponseCache`](https://relay.dev/docs/v9.1.0/network-layer/#caching) to cache the query data. However, the code is a bit more complex.
 
 - https://github.com/relayjs/relay-examples/blob/b6f9b199d0b8027b5a76a11f1821631b216f4df4/issue-tracker-next-v13/src/relay/environment.ts#L59C14-L64
 - https://github.com/relayjs/relay-examples/blob/b6f9b199d0b8027b5a76a11f1821631b216f4df4/issue-tracker-next-v13/src/relay/environment.ts#L72-L80
 - https://github.com/relayjs/relay-examples/blob/b6f9b199d0b8027b5a76a11f1821631b216f4df4/issue-tracker-next-v13/src/relay/useSerializablePreloadedQuery.ts#L42-L53
 
-In this PoC, we cache query data in a `Store`. Store` is the standard place to cache query results in Relay. This simplifies the code.
+In this PoC, we cache query data in a `Store`. It is the standard storage to cache query results in Relay. This simplifies the code.
 
 - https://github.com/mizdra/poc-nextjs-app-router-relay/blob/main/components/RelayRecordMapPublisher.tsx
