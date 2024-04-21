@@ -4,7 +4,7 @@ import { Header } from '@/app/Header';
 import { SideBar } from '@/app/SideBar';
 import type { layout_RootLayoutQuery } from '@/app/__generated__/layout_RootLayoutQuery.graphql';
 import { RelayEnvironmentProvider } from '@/components/RelayEnvironmentProvider';
-import { fetchGraphQLQuery } from '@/lib/relay/fetchQuery';
+import { fetchGraphQLQuery } from '@/lib/relay/fetchGraphQLQuery';
 import type { Metadata } from 'next';
 import { graphql } from 'relay-runtime';
 

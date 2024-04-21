@@ -2,7 +2,7 @@ import { CommentsCard } from '@/app/article/[articleId]/CommentsCard';
 import type { page_ArticlePageQuery } from '@/app/article/[articleId]/__generated__/page_ArticlePageQuery.graphql';
 import { Card } from '@/components/Card';
 import { RelayRecordMapPublisher } from '@/components/RelayRecordMapPublisher';
-import { fetchGraphQLQuery } from '@/lib/relay/fetchQuery';
+import { fetchGraphQLQuery } from '@/lib/relay/fetchGraphQLQuery';
 import { notFound } from 'next/navigation';
 import { graphql } from 'relay-runtime';
 
