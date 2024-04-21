@@ -19,7 +19,7 @@ This PoC demonstrates how to combine Next.js App Router with Relay while keeping
 - Node.js
 - [watchman](https://facebook.github.io/watchman/docs/install)
 
-## How to develop
+## How to run
 
 ```console
 $ npm i
