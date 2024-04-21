@@ -12,7 +12,7 @@ import type {
   page_ArticlePageQuery$rawResponse,
   page_ArticlePageQuery$variables,
 } from '@/app/article/[articleId]/__generated__/page_ArticlePageQuery.graphql';
-import { ArticleFactory, ViewerFactory } from '@/lib/mocks/factory';
+import { ArticleCommentFactory, ArticleFactory, ViewerFactory } from '@/lib/mocks/factory';
 import { HttpResponse, delay, graphql } from 'msw';
 
 export const handlers = [
@@ -66,12 +66,12 @@ export const handlers = [
         data: {
           latestArticles: {
             edges: [
-              { cursor: '1', node: await ArticleFactory.build() },
-              { cursor: '2', node: await ArticleFactory.build() },
-              { cursor: '3', node: await ArticleFactory.build() },
+              { cursor: '4', node: await ArticleFactory.build() },
+              { cursor: '5', node: await ArticleFactory.build() },
+              { cursor: '6', node: await ArticleFactory.build() },
             ],
             pageInfo: {
-              endCursor: '3',
+              endCursor: '6',
               hasNextPage: true,
             },
           },
@@ -85,7 +85,20 @@ export const handlers = [
       await delay(500);
       return HttpResponse.json({
         data: {
-          node: await ArticleFactory.build({ id: variables.id }),
+          node: await ArticleFactory.build({
+            id: variables.id,
+            comments: {
+              edges: [
+                { cursor: '4', node: await ArticleCommentFactory.build() },
+                { cursor: '5', node: await ArticleCommentFactory.build() },
+                { cursor: '6', node: await ArticleCommentFactory.build() },
+              ],
+              pageInfo: {
+                endCursor: '6',
+                hasNextPage: true,
+              },
+            },
+          }),
         },
       });
     },
