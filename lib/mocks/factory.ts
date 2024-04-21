@@ -40,7 +40,7 @@ export const UserFactory = defineUserFactory({
   defaultFields: {
     __typename: 'User',
     id: dynamic(({ seq }) => `User-${seq}`),
-    name: 'JavaScripter',
+    name: dynamic(async ({ get }) => `${await get('id')}`),
     avatar: {
       url: I_JS.src,
       width: I_JS.width,
