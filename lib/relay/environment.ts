@@ -12,7 +12,7 @@ if (process.env.NEXT_PUBLIC_API_ENDPOINT === undefined) throw new Error('NEXT_PU
 const GRAPHQL_API_ENDPOINT = `${process.env.NEXT_PUBLIC_API_ENDPOINT}/api/graphql`;
 const IS_SERVER = typeof window === typeof undefined;
 
-export async function networkFetch(request: RequestParameters, variables: Variables): Promise<GraphQLResponse> {
+async function networkFetch(request: RequestParameters, variables: Variables): Promise<GraphQLResponse> {
   const resp = await fetch(GRAPHQL_API_ENDPOINT, {
     method: 'POST',
     headers: {
