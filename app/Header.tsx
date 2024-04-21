@@ -8,7 +8,6 @@ import { graphql } from 'relay-runtime';
 
 import { User } from '@/components/User';
 import Link from 'next/link';
-import { RelayGCButton } from '../components/RelayGCButton';
 import styles from './Header.module.css';
 
 export function Header() {
@@ -19,15 +18,10 @@ export function Header() {
           mini-blog
         </Link>
       </div>
-      <div className={styles.rightMenu}>
-        <div>
-          <Suspense fallback={'Loading...'}>
-            <LoginButtonOrUser />
-          </Suspense>
-        </div>
-        <div>
-          <RelayGCButton />
-        </div>
+      <div>
+        <Suspense fallback={'Loading...'}>
+          <LoginButtonOrUser />
+        </Suspense>
       </div>
     </header>
   );
