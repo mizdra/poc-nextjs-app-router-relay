@@ -29,6 +29,7 @@ type ArticleComment implements Node {
   id: ID!
   author: User!
   content: String!
+  article: Article!
 }
 
 type ArticleCommentEdge {
@@ -80,4 +81,19 @@ type Query {
   ): ArticleConnection!
   node(id: ID!): Node
   viewer: Viewer
+}
+
+input CreateArticleCommentInput {
+  articleId: ID!
+  content: String!
+}
+
+type CreateArticleCommentPayload {
+  comment: ArticleComment!
+}
+
+type Mutation {
+  createArticleComment(
+    input: CreateArticleCommentInput!
+  ): CreateArticleCommentPayload!
 }

@@ -14,6 +14,10 @@ import type {
 } from '@/app/article/[articleId]/__generated__/page_ArticlePageQuery.graphql';
 import { ArticleCommentFactory, ArticleFactory, ViewerFactory } from '@/lib/mocks/factory';
 import { HttpResponse, delay, graphql } from 'msw';
+import type {
+  CommentsCard_CreateArticleCommentMutation$rawResponse,
+  CommentsCard_CreateArticleCommentMutation$variables,
+} from '../../app/article/[articleId]/__generated__/CommentsCard_CreateArticleCommentMutation.graphql';
 
 export const handlers = [
   graphql.query<layout_RootLayoutQuery$rawResponse>('layout_RootLayoutQuery', async () => {
@@ -104,4 +108,17 @@ export const handlers = [
       });
     },
   ),
+  graphql.mutation<
+    CommentsCard_CreateArticleCommentMutation$rawResponse,
+    CommentsCard_CreateArticleCommentMutation$variables
+  >('CommentsCard_CreateArticleCommentMutation', async ({ variables }) => {
+    await delay(500);
+    return HttpResponse.json({
+      data: {
+        createArticleComment: {
+          comment: await ArticleCommentFactory.build({ content: variables.input.content }),
+        },
+      },
+    });
+  }),
 ];
