@@ -47,6 +47,7 @@ export const handlers = [
   graphql.query<page_ArticlePageQuery$rawResponse, page_ArticlePageQuery$variables>(
     'page_ArticlePageQuery',
     async ({ variables }) => {
+      await delay(500);
       return HttpResponse.json({
         data: {
           // `satisfies` is a workaround for https://github.com/facebook/relay/issues/4442
