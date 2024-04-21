@@ -9,7 +9,6 @@ import { useRelayEnvironment } from 'react-relay';
 export function RelayGCButton() {
   const environment = useRelayEnvironment();
   const handleClick = useCallback(() => {
-    console.log('Running GC');
     // biome-ignore lint/suspicious/noExplicitAny: Use internal API.
     (environment.getStore() as any).scheduleGC();
   }, [environment]);

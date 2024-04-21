@@ -52,7 +52,16 @@ async function networkFetch(request: RequestParameters, variables: Variables): P
 export function createEnvironment() {
   return new Environment({
     network: Network.create(networkFetch),
-    store: new Store(new RecordSource()),
+    store: new Store(new RecordSource(), {
+      gcScheduler: (run) => {
+        console.log('Running GC'); // Log for debugging
+        queueMicrotask(run);
+      },
+      // Uncomment the following lines to see the impact of garbage collection.
+      // Check the state of the store before and after the page transition with relay-devtools.
+      // ref: https://relay.dev/docs/debugging/relay-devtools/
+      // gcReleaseBufferSize: 0,
+    }),
     isServer: IS_SERVER,
   });
 }

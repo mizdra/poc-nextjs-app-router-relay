@@ -12,6 +12,7 @@ export default async function ArticlePage({ params }: { params: { articleId: str
   const {
     data: { node: article },
     recordMap,
+    operationDescriptor,
   } = await fetchGraphQLQuery<page_ArticlePageQuery>(
     graphql`
     query page_ArticlePageQuery($articleId: ID!) @raw_response_type {
@@ -30,7 +31,7 @@ export default async function ArticlePage({ params }: { params: { articleId: str
   );
   if (article?.__typename !== 'Article') return notFound();
   return (
-    <RelayRecordMapPublisher recordMap={recordMap}>
+    <RelayRecordMapPublisher recordMap={recordMap} operationDescriptor={operationDescriptor}>
       <main className={styles.main}>
         <Card>
           <h2>{article.title}</h2>

@@ -30,12 +30,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { data, recordMap } = await fetchGraphQLQuery<layout_RootLayoutQuery>(rootLayoutQuery, {});
+  const { data, recordMap, operationDescriptor } = await fetchGraphQLQuery<layout_RootLayoutQuery>(rootLayoutQuery, {});
   return (
     <html lang="en">
       <head>{/* TODO: Add favicon */}</head>
       <RelayEnvironmentProvider>
-        <RelayRecordMapPublisher recordMap={recordMap}>
+        <RelayRecordMapPublisher recordMap={recordMap} operationDescriptor={operationDescriptor}>
           <body>
             <div>
               <Header />
