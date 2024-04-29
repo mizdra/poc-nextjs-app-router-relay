@@ -31,7 +31,7 @@ export function CommentsCard({ article }: { article: CommentsCard_article$key })
   );
 
   // Create a new comment and prepend it to the list of comments.
-  const [createComment, isInFlight] = useMutation<CommentsCard_PostCommentMutation>(graphql`
+  const [postComment, isInFlight] = useMutation<CommentsCard_PostCommentMutation>(graphql`
     mutation CommentsCard_PostCommentMutation($connections: [ID!]!, $input: PostCommentInput!) @raw_response_type {
       postComment(input: $input) {
         comment @prependNode(connections: $connections, edgeTypeName: "CommentEdge") {
@@ -47,7 +47,7 @@ export function CommentsCard({ article }: { article: CommentsCard_article$key })
       const formData = new FormData(form);
       const articleId = formData.get('articleId') as string;
       const content = formData.get('content') as string;
-      createComment({
+      postComment({
         variables: {
           input: { articleId, content },
           connections: [data.comments.__id],
@@ -57,7 +57,7 @@ export function CommentsCard({ article }: { article: CommentsCard_article$key })
         },
       });
     },
-    [createComment, data],
+    [postComment, data],
   );
 
   const comments = data.comments.edges.map((edge) => edge.node);
