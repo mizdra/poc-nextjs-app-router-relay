@@ -7,7 +7,7 @@ import { User } from '@/components/User';
 import { useCallback } from 'react';
 // biome-ignore lint/nursery/noRestrictedImports: This is CC.
 import { graphql, useFragment, useMutation, usePaginationFragment } from 'react-relay';
-import type { CommentsCard_CreateArticleCommentMutation } from './__generated__/CommentsCard_CreateArticleCommentMutation.graphql';
+import type { CommentsCard_PostArticleCommentMutation } from './__generated__/CommentsCard_PostArticleCommentMutation.graphql';
 
 // This is the Client Component because it implements pagination with `usePaginationFragment`.
 export function CommentsCard({ article }: { article: CommentsCard_article$key }) {
@@ -31,9 +31,9 @@ export function CommentsCard({ article }: { article: CommentsCard_article$key })
   );
 
   // Create a new comment and prepend it to the list of comments.
-  const [createComment, isInFlight] = useMutation<CommentsCard_CreateArticleCommentMutation>(graphql`
-    mutation CommentsCard_CreateArticleCommentMutation($connections: [ID!]!, $input: CreateArticleCommentInput!) @raw_response_type {
-      createArticleComment(input: $input) {
+  const [createComment, isInFlight] = useMutation<CommentsCard_PostArticleCommentMutation>(graphql`
+    mutation CommentsCard_PostArticleCommentMutation($connections: [ID!]!, $input: PostArticleCommentInput!) @raw_response_type {
+      postArticleComment(input: $input) {
         comment @prependNode(connections: $connections, edgeTypeName: "ArticleCommentEdge") {
           ...CommentsCard_articleComment
         }

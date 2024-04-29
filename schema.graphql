@@ -83,17 +83,17 @@ type Query {
   viewer: Viewer
 }
 
-input CreateArticleCommentInput {
+input PostArticleCommentInput {
   articleId: ID!
   content: String!
 }
 
-type CreateArticleCommentPayload {
+type PostArticleCommentPayload {
   comment: ArticleComment!
 }
 
 type Mutation {
-  createArticleComment(
-    input: CreateArticleCommentInput!
-  ): CreateArticleCommentPayload!
+  postArticleComment(
+    input: PostArticleCommentInput!
+  ): PostArticleCommentPayload!
 }
