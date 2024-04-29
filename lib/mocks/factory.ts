@@ -1,6 +1,6 @@
 import {
-  defineArticleCommentFactory,
   defineArticleFactory,
+  defineCommentFactory,
   defineUserFactory,
   defineViewerFactory,
   dynamic,
@@ -15,9 +15,9 @@ export const ArticleFactory = defineArticleFactory({
     content: 'This is the content of Article.',
     comments: dynamic(async () => ({
       edges: [
-        { cursor: '1', node: await ArticleCommentFactory.build() },
-        { cursor: '2', node: await ArticleCommentFactory.build() },
-        { cursor: '3', node: await ArticleCommentFactory.build() },
+        { cursor: '1', node: await CommentFactory.build() },
+        { cursor: '2', node: await CommentFactory.build() },
+        { cursor: '3', node: await CommentFactory.build() },
       ],
       pageInfo: {
         endCursor: '3',
@@ -27,10 +27,10 @@ export const ArticleFactory = defineArticleFactory({
   },
 });
 
-export const ArticleCommentFactory = defineArticleCommentFactory({
+export const CommentFactory = defineCommentFactory({
   defaultFields: {
-    __typename: 'ArticleComment',
-    id: dynamic(({ seq }) => `ArticleComment-${seq}`),
+    __typename: 'Comment',
+    id: dynamic(({ seq }) => `Comment-${seq}`),
     author: dynamic(() => UserFactory.build()),
     content: dynamic(async ({ get }) => `This is the comment of ${await get('id')}.`),
   },

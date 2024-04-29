@@ -1,13 +1,13 @@
 'use client';
 
 import type { CommentsCard_article$key } from '@/app/article/[articleId]/__generated__/CommentsCard_article.graphql';
-import type { CommentsCard_articleComment$key } from '@/app/article/[articleId]/__generated__/CommentsCard_articleComment.graphql';
+import type { CommentsCard_comment$key } from '@/app/article/[articleId]/__generated__/CommentsCard_comment.graphql';
 import { Card } from '@/components/Card';
 import { User } from '@/components/User';
 import { useCallback } from 'react';
 // biome-ignore lint/nursery/noRestrictedImports: This is CC.
 import { graphql, useFragment, useMutation, usePaginationFragment } from 'react-relay';
-import type { CommentsCard_PostArticleCommentMutation } from './__generated__/CommentsCard_PostArticleCommentMutation.graphql';
+import type { CommentsCard_PostCommentMutation } from './__generated__/CommentsCard_PostCommentMutation.graphql';
 
 // This is the Client Component because it implements pagination with `usePaginationFragment`.
 export function CommentsCard({ article }: { article: CommentsCard_article$key }) {
@@ -21,7 +21,7 @@ export function CommentsCard({ article }: { article: CommentsCard_article$key })
           edges {
             node {
               id
-              ...CommentsCard_articleComment
+              ...CommentsCard_comment
             }
           }
         }
@@ -31,11 +31,11 @@ export function CommentsCard({ article }: { article: CommentsCard_article$key })
   );
 
   // Create a new comment and prepend it to the list of comments.
-  const [createComment, isInFlight] = useMutation<CommentsCard_PostArticleCommentMutation>(graphql`
-    mutation CommentsCard_PostArticleCommentMutation($connections: [ID!]!, $input: PostArticleCommentInput!) @raw_response_type {
-      postArticleComment(input: $input) {
-        comment @prependNode(connections: $connections, edgeTypeName: "ArticleCommentEdge") {
-          ...CommentsCard_articleComment
+  const [createComment, isInFlight] = useMutation<CommentsCard_PostCommentMutation>(graphql`
+    mutation CommentsCard_PostCommentMutation($connections: [ID!]!, $input: PostCommentInput!) @raw_response_type {
+      postComment(input: $input) {
+        comment @prependNode(connections: $connections, edgeTypeName: "CommentEdge") {
+          ...CommentsCard_comment
         }
       }
     }
@@ -76,7 +76,7 @@ export function CommentsCard({ article }: { article: CommentsCard_article$key })
       <div>
         {comments.map((comment) => (
           <div key={comment.id}>
-            <Comment articleComment={comment} />
+            <Comment comment={comment} />
             <hr />
           </div>
         ))}
@@ -92,17 +92,17 @@ export function CommentsCard({ article }: { article: CommentsCard_article$key })
   );
 }
 
-function Comment({ articleComment }: { articleComment: CommentsCard_articleComment$key }) {
+function Comment({ comment }: { comment: CommentsCard_comment$key }) {
   const { author, content } = useFragment(
     graphql`
-      fragment CommentsCard_articleComment on ArticleComment {
+      fragment CommentsCard_comment on Comment {
         author {
           ...User_user
         }
         content
       }
     `,
-    articleComment,
+    comment,
   );
   return (
     <div>

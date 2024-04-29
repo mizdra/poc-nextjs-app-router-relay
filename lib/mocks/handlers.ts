@@ -12,12 +12,12 @@ import type {
   page_ArticlePageQuery$rawResponse,
   page_ArticlePageQuery$variables,
 } from '@/app/article/[articleId]/__generated__/page_ArticlePageQuery.graphql';
-import { ArticleCommentFactory, ArticleFactory, ViewerFactory } from '@/lib/mocks/factory';
+import { ArticleFactory, CommentFactory, ViewerFactory } from '@/lib/mocks/factory';
 import { HttpResponse, delay, graphql } from 'msw';
 import type {
-  CommentsCard_PostArticleCommentMutation$rawResponse,
-  CommentsCard_PostArticleCommentMutation$variables,
-} from '../../app/article/[articleId]/__generated__/CommentsCard_PostArticleCommentMutation.graphql';
+  CommentsCard_PostCommentMutation$rawResponse,
+  CommentsCard_PostCommentMutation$variables,
+} from '../../app/article/[articleId]/__generated__/CommentsCard_PostCommentMutation.graphql';
 
 export const handlers = [
   graphql.query<layout_RootLayoutQuery$rawResponse>('layout_RootLayoutQuery', async () => {
@@ -94,9 +94,9 @@ export const handlers = [
             id: variables.id,
             comments: {
               edges: [
-                { cursor: '4', node: await ArticleCommentFactory.build() },
-                { cursor: '5', node: await ArticleCommentFactory.build() },
-                { cursor: '6', node: await ArticleCommentFactory.build() },
+                { cursor: '4', node: await CommentFactory.build() },
+                { cursor: '5', node: await CommentFactory.build() },
+                { cursor: '6', node: await CommentFactory.build() },
               ],
               pageInfo: {
                 endCursor: '6',
@@ -108,17 +108,17 @@ export const handlers = [
       });
     },
   ),
-  graphql.mutation<
-    CommentsCard_PostArticleCommentMutation$rawResponse,
-    CommentsCard_PostArticleCommentMutation$variables
-  >('CommentsCard_PostArticleCommentMutation', async ({ variables }) => {
-    await delay(500);
-    return HttpResponse.json({
-      data: {
-        postArticleComment: {
-          comment: await ArticleCommentFactory.build({ content: variables.input.content }),
+  graphql.mutation<CommentsCard_PostCommentMutation$rawResponse, CommentsCard_PostCommentMutation$variables>(
+    'CommentsCard_PostCommentMutation',
+    async ({ variables }) => {
+      await delay(500);
+      return HttpResponse.json({
+        data: {
+          postComment: {
+            comment: await CommentFactory.build({ content: variables.input.content }),
+          },
         },
-      },
-    });
-  }),
+      });
+    },
+  ),
 ];

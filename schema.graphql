@@ -11,7 +11,7 @@ type Article implements Node {
     after: String
     last: Int
     before: String
-  ): ArticleCommentConnection!
+  ): CommentConnection!
 }
 
 type ArticleEdge {
@@ -25,21 +25,21 @@ type ArticleConnection {
   pageInfo: PageInfo!
 }
 
-type ArticleComment implements Node {
+type Comment implements Node {
   id: ID!
   author: User!
   content: String!
   article: Article!
 }
 
-type ArticleCommentEdge {
+type CommentEdge {
   cursor: String!
-  node: ArticleComment!
+  node: Comment!
 }
 
-type ArticleCommentConnection {
-  nodes: [ArticleComment!]!
-  edges: [ArticleCommentEdge!]!
+type CommentConnection {
+  nodes: [Comment!]!
+  edges: [CommentEdge!]!
   pageInfo: PageInfo!
 }
 
@@ -83,17 +83,15 @@ type Query {
   viewer: Viewer
 }
 
-input PostArticleCommentInput {
+input PostCommentInput {
   articleId: ID!
   content: String!
 }
 
-type PostArticleCommentPayload {
-  comment: ArticleComment!
+type PostCommentPayload {
+  comment: Comment!
 }
 
 type Mutation {
-  postArticleComment(
-    input: PostArticleCommentInput!
-  ): PostArticleCommentPayload!
+  postComment(input: PostCommentInput!): PostCommentPayload!
 }
