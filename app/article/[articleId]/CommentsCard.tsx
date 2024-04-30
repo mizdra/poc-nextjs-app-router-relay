@@ -34,7 +34,7 @@ export function CommentsCard({ article }: { article: CommentsCard_article$key })
   const [postComment, isInFlight] = useMutation<CommentsCard_PostCommentMutation>(graphql`
     mutation CommentsCard_PostCommentMutation($connections: [ID!]!, $input: PostCommentInput!) @raw_response_type {
       postComment(input: $input) {
-        comment @prependNode(connections: $connections, edgeTypeName: "CommentEdge") {
+        comment @appendNode(connections: $connections, edgeTypeName: "CommentEdge") {
           ...CommentsCard_comment
         }
       }
