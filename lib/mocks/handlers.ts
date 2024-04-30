@@ -12,8 +12,12 @@ import type {
   page_ArticlePageQuery$rawResponse,
   page_ArticlePageQuery$variables,
 } from '@/app/article/[articleId]/__generated__/page_ArticlePageQuery.graphql';
-import { ArticleCommentFactory, ArticleFactory, ViewerFactory } from '@/lib/mocks/factory';
+import { ArticleFactory, CommentFactory, ViewerFactory, comments } from '@/lib/mocks/factory';
 import { HttpResponse, delay, graphql } from 'msw';
+import type {
+  CommentsCard_PostCommentMutation$rawResponse,
+  CommentsCard_PostCommentMutation$variables,
+} from '../../app/article/[articleId]/__generated__/CommentsCard_PostCommentMutation.graphql';
 
 export const handlers = [
   graphql.query<layout_RootLayoutQuery$rawResponse>('layout_RootLayoutQuery', async () => {
@@ -84,22 +88,41 @@ export const handlers = [
     'CommentsCardPaginationQuery',
     async ({ variables }) => {
       await delay(500);
+      const before = comments.findIndex(({ id }) => id === variables.before);
+      const last = +(variables.last ?? 0);
       return HttpResponse.json({
         data: {
           node: await ArticleFactory.build({
             id: variables.id,
             comments: {
-              edges: [
-                { cursor: '4', node: await ArticleCommentFactory.build() },
-                { cursor: '5', node: await ArticleCommentFactory.build() },
-                { cursor: '6', node: await ArticleCommentFactory.build() },
-              ],
+              edges: comments
+                .slice(0, before)
+                .slice(-last)
+                .map((comment) => ({
+                  cursor: comment.id,
+                  node: comment,
+                })),
               pageInfo: {
-                endCursor: '6',
-                hasNextPage: true,
+                startCursor: comments.slice(0, before).slice(-last)[0]?.id ?? null,
+                hasPreviousPage: comments.slice(0, before).length > last,
               },
             },
           }),
+        },
+      });
+    },
+  ),
+  graphql.mutation<CommentsCard_PostCommentMutation$rawResponse, CommentsCard_PostCommentMutation$variables>(
+    'CommentsCard_PostCommentMutation',
+    async ({ variables }) => {
+      await delay(500);
+      const comment = await CommentFactory.build({ content: variables.input.content });
+      comments.push(comment);
+      return HttpResponse.json({
+        data: {
+          postComment: {
+            comment,
+          },
         },
       });
     },
