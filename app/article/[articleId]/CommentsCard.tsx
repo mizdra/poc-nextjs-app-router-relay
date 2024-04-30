@@ -11,12 +11,12 @@ import type { CommentsCard_PostCommentMutation } from './__generated__/CommentsC
 
 // This is the Client Component because it implements pagination with `usePaginationFragment`.
 export function CommentsCard({ article }: { article: CommentsCard_article$key }) {
-  const { data, hasNext, loadNext, isLoadingNext } = usePaginationFragment(
+  const { data, hasPrevious, loadPrevious, isLoadingPrevious } = usePaginationFragment(
     graphql`
       fragment CommentsCard_article on Article
-      @argumentDefinitions(first: { type: "Int", defaultValue: 3 }, after: { type: "String" })
+      @argumentDefinitions(last: { type: "Int", defaultValue: 3 }, before: { type: "String" })
       @refetchable(queryName: "CommentsCardPaginationQuery" directives: ["@raw_response_type"]) {
-        comments(first: $first, after: $after) @connection(key: "CommentsCard_comments") {
+        comments(last: $last, before: $before) @connection(key: "CommentsCard_comments") {
           __id
           edges {
             node {
@@ -64,6 +64,21 @@ export function CommentsCard({ article }: { article: CommentsCard_article$key })
   return (
     <Card>
       <h2>Comments</h2>
+      {hasPrevious && (
+        <div>
+          <button type="button" onClick={() => loadPrevious(3)} disabled={isLoadingPrevious}>
+            Load previous comments
+          </button>
+        </div>
+      )}
+      <div>
+        {comments.map((comment) => (
+          <div key={comment.id}>
+            <Comment comment={comment} />
+            <hr />
+          </div>
+        ))}
+      </div>
       <div>
         <form onSubmit={handleSubmit}>
           <input type="hidden" name="articleId" value={data.id} />
@@ -73,21 +88,6 @@ export function CommentsCard({ article }: { article: CommentsCard_article$key })
           </button>
         </form>
       </div>
-      <div>
-        {comments.map((comment) => (
-          <div key={comment.id}>
-            <Comment comment={comment} />
-            <hr />
-          </div>
-        ))}
-      </div>
-      {hasNext && (
-        <div>
-          <button type="button" onClick={() => loadNext(3)} disabled={isLoadingNext}>
-            Load more
-          </button>
-        </div>
-      )}
     </Card>
   );
 }

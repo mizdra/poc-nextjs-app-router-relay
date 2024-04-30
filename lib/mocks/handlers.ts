@@ -88,20 +88,23 @@ export const handlers = [
     'CommentsCardPaginationQuery',
     async ({ variables }) => {
       await delay(500);
-      const after = +(variables.after ?? 0);
-      const first = +(variables.first ?? 0);
+      const before = comments.findIndex(({ id }) => id === variables.before);
+      const last = +(variables.last ?? 0);
       return HttpResponse.json({
         data: {
           node: await ArticleFactory.build({
             id: variables.id,
             comments: {
-              edges: comments.slice(after, after + first).map((comment) => ({
-                cursor: comment.id,
-                node: comment,
-              })),
+              edges: comments
+                .slice(0, before)
+                .slice(-last)
+                .map((comment) => ({
+                  cursor: comment.id,
+                  node: comment,
+                })),
               pageInfo: {
-                endCursor: `${after + first}`,
-                hasNextPage: after + first < comments.length,
+                startCursor: comments.slice(0, before).slice(-last)[0]?.id ?? null,
+                hasPreviousPage: comments.slice(0, before).length > last,
               },
             },
           }),

@@ -14,10 +14,10 @@ export const ArticleFactory = defineArticleFactory({
     title: dynamic(async ({ get }) => `Title of ${await get('id')}`),
     content: 'This is the content of Article.',
     comments: dynamic(async () => ({
-      edges: comments.slice(0, 3).map((comment) => ({ cursor: comment.id, node: comment })),
+      edges: comments.slice(-3).map((comment) => ({ cursor: comment.id, node: comment })),
       pageInfo: {
-        endCursor: '3',
-        hasNextPage: true,
+        startCursor: comments.slice(-3)[0].id,
+        hasPreviousPage: true,
       },
     })),
   },
