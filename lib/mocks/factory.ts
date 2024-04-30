@@ -6,7 +6,6 @@ import {
   dynamic,
 } from '@/__generated__/fabbrica';
 import I_JS from '@/assets/js.png';
-import { comments } from './data';
 
 export const ArticleFactory = defineArticleFactory({
   defaultFields: {
@@ -52,3 +51,5 @@ export const ViewerFactory = defineViewerFactory({
     user: dynamic(() => UserFactory.build()),
   },
 });
+
+export const comments = await CommentFactory.buildList(20);

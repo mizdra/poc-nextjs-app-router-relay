@@ -12,13 +12,12 @@ import type {
   page_ArticlePageQuery$rawResponse,
   page_ArticlePageQuery$variables,
 } from '@/app/article/[articleId]/__generated__/page_ArticlePageQuery.graphql';
-import { ArticleFactory, CommentFactory, ViewerFactory } from '@/lib/mocks/factory';
+import { ArticleFactory, CommentFactory, ViewerFactory, comments } from '@/lib/mocks/factory';
 import { HttpResponse, delay, graphql } from 'msw';
 import type {
   CommentsCard_PostCommentMutation$rawResponse,
   CommentsCard_PostCommentMutation$variables,
 } from '../../app/article/[articleId]/__generated__/CommentsCard_PostCommentMutation.graphql';
-import { comments } from './data';
 
 export const handlers = [
   graphql.query<layout_RootLayoutQuery$rawResponse>('layout_RootLayoutQuery', async () => {
