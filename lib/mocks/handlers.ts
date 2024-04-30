@@ -18,6 +18,7 @@ import type {
   CommentsCard_PostCommentMutation$rawResponse,
   CommentsCard_PostCommentMutation$variables,
 } from '../../app/article/[articleId]/__generated__/CommentsCard_PostCommentMutation.graphql';
+import { comments } from './data';
 
 export const handlers = [
   graphql.query<layout_RootLayoutQuery$rawResponse>('layout_RootLayoutQuery', async () => {
@@ -88,19 +89,20 @@ export const handlers = [
     'CommentsCardPaginationQuery',
     async ({ variables }) => {
       await delay(500);
+      const after = +(variables.after ?? 0);
+      const first = +(variables.first ?? 0);
       return HttpResponse.json({
         data: {
           node: await ArticleFactory.build({
             id: variables.id,
             comments: {
-              edges: [
-                { cursor: '4', node: await CommentFactory.build() },
-                { cursor: '5', node: await CommentFactory.build() },
-                { cursor: '6', node: await CommentFactory.build() },
-              ],
+              edges: comments.slice(after, after + first).map((comment) => ({
+                cursor: comment.id,
+                node: comment,
+              })),
               pageInfo: {
-                endCursor: '6',
-                hasNextPage: true,
+                endCursor: `${after + first}`,
+                hasNextPage: after + first < comments.length,
               },
             },
           }),
@@ -112,10 +114,12 @@ export const handlers = [
     'CommentsCard_PostCommentMutation',
     async ({ variables }) => {
       await delay(500);
+      const comment = await CommentFactory.build({ content: variables.input.content });
+      comments.push(comment);
       return HttpResponse.json({
         data: {
           postComment: {
-            comment: await CommentFactory.build({ content: variables.input.content }),
+            comment,
           },
         },
       });

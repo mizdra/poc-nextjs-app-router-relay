@@ -6,6 +6,7 @@ import {
   dynamic,
 } from '@/__generated__/fabbrica';
 import I_JS from '@/assets/js.png';
+import { comments } from './data';
 
 export const ArticleFactory = defineArticleFactory({
   defaultFields: {
@@ -14,11 +15,7 @@ export const ArticleFactory = defineArticleFactory({
     title: dynamic(async ({ get }) => `Title of ${await get('id')}`),
     content: 'This is the content of Article.',
     comments: dynamic(async () => ({
-      edges: [
-        { cursor: '1', node: await CommentFactory.build() },
-        { cursor: '2', node: await CommentFactory.build() },
-        { cursor: '3', node: await CommentFactory.build() },
-      ],
+      edges: comments.slice(0, 3).map((comment) => ({ cursor: comment.id, node: comment })),
       pageInfo: {
         endCursor: '3',
         hasNextPage: true,
