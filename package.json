@@ -26,23 +26,23 @@
     "relay-runtime": "^20.0.0"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.6.3",
-    "@graphql-codegen/cli": "^5.0.2",
-    "@graphql-codegen/typescript": "^4.0.6",
-    "@mizdra/graphql-codegen-typescript-fabbrica": "^0.5.0",
-    "@parcel/watcher": "^2.4.1",
-    "@types/node": "^20",
+    "@biomejs/biome": "1.9.4",
+    "@graphql-codegen/cli": "^5.0.7",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@mizdra/graphql-codegen-typescript-fabbrica": "^0.6.1",
+    "@parcel/watcher": "^2.5.1",
+    "@types/node": "^24",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@types/react-relay": "^18.2.1",
     "@types/relay-runtime": "^19.0.2",
     "graphql": "^16.11.0",
-    "happy-css-modules": "^2.1.2",
-    "msw": "^2.2.13",
-    "npm-run-all2": "^6.1.2",
+    "happy-css-modules": "^4.0.0",
+    "msw": "^2.10.2",
+    "npm-run-all2": "^8.0.4",
     "relay-compiler": "^20.0.0",
     "strict-event-emitter": "^0.5.1",
-    "tsx": "^4.7.1",
+    "tsx": "^4.20.3",
     "typescript": "^5"
   }
 }
