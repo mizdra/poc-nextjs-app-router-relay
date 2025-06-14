@@ -12,24 +12,15 @@ import type {
   page_ArticlePageQuery$rawResponse,
   page_ArticlePageQuery$variables,
 } from '@/app/article/[articleId]/__generated__/page_ArticlePageQuery.graphql';
-import { ArticleCommentFactory, ArticleFactory, ViewerFactory } from '@/lib/mocks/factory';
+import { ArticleFactory, ViewerFactory, articleComments, articles } from '@/lib/mocks/factory';
+import { connectionFromArray } from 'graphql-relay';
 import { HttpResponse, delay, graphql } from 'msw';
 
 export const handlers = [
   graphql.query<layout_RootLayoutQuery$rawResponse>('layout_RootLayoutQuery', async () => {
     return HttpResponse.json({
       data: {
-        latestArticles: {
-          edges: [
-            { cursor: '1', node: await ArticleFactory.build() },
-            { cursor: '2', node: await ArticleFactory.build() },
-            { cursor: '3', node: await ArticleFactory.build() },
-          ],
-          pageInfo: {
-            endCursor: '3',
-            hasNextPage: true,
-          },
-        },
+        latestArticles: connectionFromArray(articles, { first: 3 }),
         popularArticles: {
           nodes: await ArticleFactory.buildList(3),
         },
@@ -51,31 +42,21 @@ export const handlers = [
       return HttpResponse.json({
         data: {
           // `satisfies` is a workaround for https://github.com/facebook/relay/issues/4442
-          node: (await ArticleFactory.build({ id: variables.articleId })) satisfies Extract<
-            page_ArticlePageQuery$rawResponse['node'],
-            { __typename: 'Article' }
-          >,
+          node: (await ArticleFactory.build({
+            id: variables.articleId,
+            comments: connectionFromArray(articleComments, { first: 3 }),
+          })) satisfies Extract<page_ArticlePageQuery$rawResponse['node'], { __typename: 'Article' }>,
         },
       });
     },
   ),
   graphql.query<LatestArticleCardPaginationQuery$rawResponse, LatestArticleCardPaginationQuery$variables>(
     'LatestArticleCardPaginationQuery',
-    async () => {
+    async ({ variables }) => {
       await delay(500);
       return HttpResponse.json({
         data: {
-          latestArticles: {
-            edges: [
-              { cursor: '4', node: await ArticleFactory.build() },
-              { cursor: '5', node: await ArticleFactory.build() },
-              { cursor: '6', node: await ArticleFactory.build() },
-            ],
-            pageInfo: {
-              endCursor: '6',
-              hasNextPage: true,
-            },
-          },
+          latestArticles: connectionFromArray(articles, variables),
         },
       });
     },
@@ -88,17 +69,7 @@ export const handlers = [
         data: {
           node: await ArticleFactory.build({
             id: variables.id,
-            comments: {
-              edges: [
-                { cursor: '4', node: await ArticleCommentFactory.build() },
-                { cursor: '5', node: await ArticleCommentFactory.build() },
-                { cursor: '6', node: await ArticleCommentFactory.build() },
-              ],
-              pageInfo: {
-                endCursor: '6',
-                hasNextPage: true,
-              },
-            },
+            comments: connectionFromArray(articleComments, variables),
           }),
         },
       });
