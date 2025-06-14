@@ -13,17 +13,7 @@ export const ArticleFactory = defineArticleFactory({
     id: dynamic(({ seq }) => `Article-${seq}`),
     title: dynamic(async ({ get }) => `Title of ${await get('id')}`),
     content: 'This is the content of Article.',
-    comments: dynamic(async () => ({
-      edges: [
-        { cursor: '1', node: await ArticleCommentFactory.build() },
-        { cursor: '2', node: await ArticleCommentFactory.build() },
-        { cursor: '3', node: await ArticleCommentFactory.build() },
-      ],
-      pageInfo: {
-        endCursor: '3',
-        hasNextPage: true,
-      },
-    })),
+    comments: dynamic(() => ArticleCommentFactory.buildConnection(3, {})),
   },
 });
 
@@ -55,3 +45,6 @@ export const ViewerFactory = defineViewerFactory({
     user: dynamic(() => UserFactory.build()),
   },
 });
+
+export const articles = await ArticleFactory.buildList(20);
+export const articleComments = await ArticleCommentFactory.buildList(20);

@@ -22,15 +22,5 @@
     "quickfix.biome": "explicit",
     "source.organizeImports.biome": "explicit"
   },
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    "**/Thumbs.db": true,
-    "**/*.module.css.d.ts": true,
-    "**/*.module.css.d.ts.map": true
-  }
+  "typescript.tsdk": "node_modules/typescript/lib"
 }

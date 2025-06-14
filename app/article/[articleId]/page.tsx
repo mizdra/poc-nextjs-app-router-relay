@@ -11,7 +11,8 @@ import styles from './page.module.css';
 export const dynamic = 'force-dynamic';
 export const fetchCache = 'default-no-store';
 
-export default async function ArticlePage({ params }: { params: { articleId: string } }) {
+export default async function ArticlePage({ params }: { params: Promise<{ articleId: string }> }) {
+  const { articleId } = await params;
   const {
     data: { node: article },
     recordMap,
@@ -30,7 +31,7 @@ export default async function ArticlePage({ params }: { params: { articleId: str
       }
     }
   `,
-    { articleId: params.articleId },
+    { articleId },
   );
   if (article?.__typename !== 'Article') return notFound();
   return (
