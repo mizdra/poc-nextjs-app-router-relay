@@ -41,7 +41,6 @@
     "npm-run-all2": "^8.0.4",
     "relay-compiler": "^20.0.0",
     "strict-event-emitter": "^0.5.1",
-    "tsx": "^4.20.3",
     "typescript": "^5"
   }
 }
